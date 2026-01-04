@@ -16,8 +16,6 @@ const App = () => {
   const [pagination, setPagination] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
-
-  // ✅ ADDED (1) — search & division state
   const [searchName, setSearchName] = useState("");
   const [filterDivision, setFilterDivision] = useState("All");
 
@@ -29,8 +27,8 @@ const App = () => {
           params: {
             page,
             limit: PAGE_SIZE,
-            search: searchName,        // ✅ ADDED
-            division: filterDivision,  // ✅ ADDED
+            search: searchName,        
+            division: filterDivision,  
           },
         });
 
@@ -44,7 +42,7 @@ const App = () => {
     };
 
     fetchStudents();
-  }, [page, searchName, filterDivision]); // ✅ ADDED dependencies
+  }, [page, searchName, filterDivision]); 
 
   /* FORM HANDLERS */
   const handleNameChange = (e) => {
@@ -144,7 +142,7 @@ const App = () => {
         <div style={{ flex: "2 1 600px", background: "white", padding: "25px", borderRadius: "10px" }}>
           <h3>Student Records</h3>
 
-          {/* ✅ ADDED (2) — Search & Division UI (no style changes elsewhere) */}
+          {/* Search & Division UI*/}
           <div style={{ display: "flex", gap: "15px", marginBottom: "15px" }}>
             <input
               placeholder="Search by name"
