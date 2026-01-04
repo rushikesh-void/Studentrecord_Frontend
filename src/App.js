@@ -4,7 +4,6 @@ import axios from "axios";
 const PAGE_SIZE = 5;
 const API_URL = "https://studentrecord-backend-b1qs.onrender.com/api/students";
 
-
 const App = () => {
   const initialForm = {
     _id: null,
@@ -18,7 +17,11 @@ const App = () => {
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
 
-  /* FETCH STUDENTS (BACKEND PAGINATION)*/
+  // ✅ ADDED (1) — search & division state
+  const [searchName, setSearchName] = useState("");
+  const [filterDivision, setFilterDivision] = useState("All");
+
+  /* FETCH STUDENTS (BACKEND PAGINATION + FILTERS) */
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -26,6 +29,8 @@ const App = () => {
           params: {
             page,
             limit: PAGE_SIZE,
+            search: searchName,        // ✅ ADDED
+            division: filterDivision,  // ✅ ADDED
           },
         });
 
@@ -39,7 +44,7 @@ const App = () => {
     };
 
     fetchStudents();
-  }, [page]);
+  }, [page, searchName, filterDivision]); // ✅ ADDED dependencies
 
   /* FORM HANDLERS */
   const handleNameChange = (e) => {
@@ -138,6 +143,34 @@ const App = () => {
         {/* TABLE */}
         <div style={{ flex: "2 1 600px", background: "white", padding: "25px", borderRadius: "10px" }}>
           <h3>Student Records</h3>
+
+          {/* ✅ ADDED (2) — Search & Division UI (no style changes elsewhere) */}
+          <div style={{ display: "flex", gap: "15px", marginBottom: "15px" }}>
+            <input
+              placeholder="Search by name"
+              value={searchName}
+              onChange={(e) => {
+                setSearchName(e.target.value);
+                setPage(1);
+              }}
+              style={{ padding: "10px", flex: 1 }}
+            />
+
+            <select
+              value={filterDivision}
+              onChange={(e) => {
+                setFilterDivision(e.target.value);
+                setPage(1);
+              }}
+              style={{ padding: "10px" }}
+            >
+              <option value="All">All Divisions</option>
+              <option value="First">First</option>
+              <option value="Second">Second</option>
+              <option value="Third">Third</option>
+              <option value="Fail">Fail</option>
+            </select>
+          </div>
 
           <table width="100%" border="1" cellPadding="10">
             <thead>
