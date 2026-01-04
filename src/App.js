@@ -16,10 +16,12 @@ const App = () => {
   const [pagination, setPagination] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [page, setPage] = useState(1);
+
+  // search & filter
   const [searchName, setSearchName] = useState("");
   const [filterDivision, setFilterDivision] = useState("All");
 
-  /* FETCH STUDENTS (BACKEND PAGINATION + FILTERS) */
+  // FETCH STUDENTS (BACKEND PAGINATION + FILTERS) 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -27,8 +29,8 @@ const App = () => {
           params: {
             page,
             limit: PAGE_SIZE,
-            search: searchName,        
-            division: filterDivision,  
+            ...(searchName && { search: searchName }),
+            ...(filterDivision !== "All" && { division: filterDivision }),
           },
         });
 
@@ -42,9 +44,9 @@ const App = () => {
     };
 
     fetchStudents();
-  }, [page, searchName, filterDivision]); 
+  }, [page, searchName, filterDivision]);
 
-  /* FORM HANDLERS */
+  // FORM HANDLERS 
   const handleNameChange = (e) => {
     const value = e.target.value;
     if (/^[a-zA-Z ]*$/.test(value)) {
@@ -98,7 +100,7 @@ const App = () => {
     }
   };
 
-  /* UI */
+  // UI 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f0f8ff", padding: "20px", fontFamily: "Arial" }}>
       <div style={{ backgroundColor: "#4169e1", color: "white", textAlign: "center", padding: "20px", borderRadius: "10px", marginBottom: "25px" }}>
@@ -142,7 +144,7 @@ const App = () => {
         <div style={{ flex: "2 1 600px", background: "white", padding: "25px", borderRadius: "10px" }}>
           <h3>Student Records</h3>
 
-          {/* Search & Division UI*/}
+          {/* SEARCH + FILTER (UI unchanged style-wise) */}
           <div style={{ display: "flex", gap: "15px", marginBottom: "15px" }}>
             <input
               placeholder="Search by name"
@@ -163,10 +165,10 @@ const App = () => {
               style={{ padding: "10px" }}
             >
               <option value="All">All Divisions</option>
-              <option value="First">First</option>
-              <option value="Second">Second</option>
-              <option value="Third">Third</option>
-              <option value="Fail">Fail</option>
+              <option value="First Class">First Class</option>
+              <option value="Second Class">Second Class</option>
+              <option value="Third Class">Third Class</option>
+              <option value="Distinction">Distinction</option>
             </select>
           </div>
 
