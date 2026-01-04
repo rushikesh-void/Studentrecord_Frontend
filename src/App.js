@@ -144,7 +144,7 @@ const App = () => {
         <div style={{ flex: "2 1 600px", background: "white", padding: "25px", borderRadius: "10px" }}>
           <h3>Student Records</h3>
 
-          {/* SEARCH + FILTER (UI unchanged style-wise) */}
+          {/* SEARCH + FILTER */}
           <div style={{ display: "flex", gap: "15px", marginBottom: "15px" }}>
             <input
               placeholder="Search by name"
