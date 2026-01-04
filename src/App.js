@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const PAGE_SIZE = 5;
-const API_URL = "http://localhost:5000/api/students";
+const API_URL = "https://studentrecord-backend-b1qs.onrender.com/api/students";
+
 
 const App = () => {
   const initialForm = {
